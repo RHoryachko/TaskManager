@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список тасків</title>
+    <!-- Підключення стилів Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container mt-5">
+    <h1>Список тасків</h1>
+    
+    <!-- Посилання на створення нового таска -->
+    <a href="{% url 'task_create' %}" class="btn btn-primary mb-3">Створити новий таск</a>
+    
+    <!-- Таблиця для виведення тасків -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Заголовок</th>
+                <th scope="col">Дедлайн</th>
+                <th scope="col">Пріоритет</th>
+                <th scope="col">Хештег</th>
+                <th scope="col">Статус</th>
+                <th scope="col">Дії</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ task.title }}</td>
+                    <td>{{ task.deadline|default:"Немає" }}</td>
+                    <td>{{ task.priority }}</td>
+                    <td>{{ task.hashtag }}</td>
+                    <td>{{ task.status }}</td>
+                    <td>
+                        <!-- Посилання на редагування таска -->
+                        <a href="{% url 'task_update' pk=task.pk %}" class="btn btn-warning btn-sm">Редагувати</a>
+                        
+                        <!-- Посилання на видалення таска -->
+                        <a href="{% url 'task_delete' pk=task.pk %}" class="btn btn-danger btn-sm">Видалити</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
