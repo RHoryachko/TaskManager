@@ -4,6 +4,8 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from .models import Task
 from .forms import TaskForm
+from django.views.decorators.http import require_POST
+from django.shortcuts import redirect
 
 
 
@@ -58,3 +60,34 @@ class TaskDeleteView(DeleteView):
 
     def get_success_url(self):
         return reverse_lazy('user_task_list')
+
+
+
+class HashTagTaskListView(ListView):
+    model = Task
+    template_name = 'TaskManager/hash_tag_task_list.html'
+    context_object_name = 'tasks'
+
+    def get_queryset(self):
+        hashtag = self.kwargs['hashtag']
+        return Task.objects.filter(author=self.request.user, hashtag=hashtag)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['hashtag'] = self.kwargs['hashtag']
+        return context
+
+
+def start_task(request, pk):
+    task = get_object_or_404(Task, pk=pk)
+    task.status = 'В процесі'
+    task.save()
+    return redirect('user_task_list')
+
+
+
+def complete_task(request, pk):
+    task = get_object_or_404(Task, pk=pk)
+    task.status = 'Виконано'
+    task.save()
+    return redirect('user_task_list')
