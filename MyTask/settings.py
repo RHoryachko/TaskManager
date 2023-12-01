@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'TaskManager',
+    'accounts'
 ]
 
 MIDDLEWARE = [
@@ -115,6 +116,8 @@ TIME_ZONE = 'Europe/Kiev'
 USE_I18N = True
 
 USE_TZ = True
+
+LOGIN_REDIRECT_URL = '/mytask/'
 
 
 # Static files (CSS, JavaScript, Images)

@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import UserTaskListView, TaskCreateView, TaskUpdateView, TaskDeleteView
 from .views import start_task, complete_task, HashTagTaskListView
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('', UserTaskListView.as_view(), name='user_task_list'),

@@ -21,6 +21,7 @@
                 <th scope="col">Пріоритет</th>
                 <th scope="col">Хештег</th>
                 <th scope="col">Статус</th>
+                <th scope="col">Дії</th>
             </tr>
         </thead>
         <tbody>
@@ -32,6 +33,20 @@
                     <td>{{ task.priority }}</td>
                     <td>{{ task.hashtag }}</td>
                     <td>{{ task.status }}</td>
+                    <td>
+                        {% if task.status == 'Задано' %}
+                            <!-- Кнопка "Почати" -->
+                            <a href="{% url 'start_task' pk=task.pk %}" class="btn btn-success btn-sm">Почати</a>
+                        {% elif task.status == 'В процесі' %}
+                            <!-- Кнопка "Виконано" -->
+                            <a href="{% url 'complete_task' pk=task.pk %}" class="btn btn-success btn-sm">Виконано</a>
+                        {% endif %}
+                        <!-- Посилання на редагування таска -->
+                        <a href="{% url 'task_update' pk=task.pk %}" class="btn btn-warning btn-sm">Редагувати</a>
+                        
+                        <!-- Посилання на видалення таска -->
+                        <a href="{% url 'task_delete' pk=task.pk %}" class="btn btn-danger btn-sm">Видалити</a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
